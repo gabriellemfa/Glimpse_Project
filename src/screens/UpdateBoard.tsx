@@ -7,14 +7,27 @@ import {
   TextInput,
 } from 'react-native';
 
-function CreateBoard({navigation}: {navigation: any}): React.JSX.Element {
-  const [boardName, setBoardName] = useState('');
-  const [boardDescription, setBoardDescription] = useState('');
+function UpdateBoard({
+  route,
+  navigation,
+}: {
+  route: any;
+  navigation: any;
+}): React.JSX.Element {
+  const {
+    boardName: initialBoardName,
+    boardDescription: initialBoardDescription,
+  } = route.params || {};
+
+  const [boardName, setBoardName] = useState(initialBoardName || '');
+  const [boardDescription, setBoardDescription] = useState(
+    initialBoardDescription || '',
+  );
 
   return (
     <View style={style.board}>
       {/* Header */}
-      <Text style={style.boardTxt}>Create a</Text>
+      <Text style={style.boardTxt}>Update</Text>
       <Text style={style.boardTxt2}>Board</Text>
 
       {/* Board Name */}
@@ -48,26 +61,22 @@ function CreateBoard({navigation}: {navigation: any}): React.JSX.Element {
         <TouchableOpacity
           style={style.submitBtn}
           onPress={() => {
-            setBoardName('');
-            setBoardDescription('');
             navigation.goBack();
           }}>
           <Text style={style.submitBtnTxt}>Cancel</Text>
         </TouchableOpacity>
 
-        {/* Create Button */}
+        {/* Save Button */}
         <TouchableOpacity
           style={style.submitBtn}
           onPress={() => {
-            if (boardName.trim() && boardDescription.trim()) {
-              navigation.navigate('Profile', {
-                newBoard: {name: boardName, description: boardDescription},
-              });
-            } else {
-              console.log('Board Name and Description are required.');
-            }
+            console.log('Board Updated:', boardName, boardDescription);
+            // Pass updated data back to Profile
+            navigation.navigate('Profile', {
+              updatedBoard: {name: boardName, description: boardDescription},
+            });
           }}>
-          <Text style={style.submitBtnTxt}>Create</Text>
+          <Text style={style.submitBtnTxt}>Save</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -154,4 +163,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default CreateBoard;
+export default UpdateBoard;
