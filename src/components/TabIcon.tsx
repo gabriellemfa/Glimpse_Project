@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Image, StyleSheet} from 'react-native';
 
@@ -34,7 +35,8 @@ function TabIcon(params: TabIconParams): React.JSX.Element {
             ? require('../assets/icons/profile.png')
             : null
         }
-        alt="Tab Icon"></Image>
+        alt="Tab Icon"
+      />
     </View>
   );
 }
